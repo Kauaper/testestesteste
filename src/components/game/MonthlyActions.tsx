@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import { useGame } from "@/context/GameContext";
 
 import ChapterSpecialEvent from "./ChapterSpecialEvent";
 import CollectibleStickers from "./CollectibleStickers";
+import EarningOpportunities from "./EarningOpportunities";
 import GameEnding from "./GameEnding";
 import MonthlyExpenses from "./MonthlyExpenses";
 import PetInteraction from "./PetInteraction";
@@ -450,7 +451,26 @@ export default function MonthlyActions() {
   if (currentStep === "investment") {
     const availableForInvestment = calculateRemainingAfterExpenses();
 
-    if (availableForInvestment < 10) {
+    // Entrou no vermelho
+    if (availableForInvestment < 0) {
+      return (
+        <EarningOpportunities
+          currentMonth={gameState.currentMonth}
+          onEarningAccept={(opportunity) => {
+            setExtraEarnings((prev) => prev + opportunity.earning);
+
+            setCurrentStep("expenses");
+            setActiveTab("expenses");
+          }}
+          onEarningReject={() => {
+            handleInvestmentConfirm();
+          }}
+        />
+      );
+    }
+
+    // Sobrou pouco dinheiro
+    if (availableForInvestment >= 0 && availableForInvestment < 10) {
       return (
         <View
           style={{
@@ -497,7 +517,7 @@ export default function MonthlyActions() {
               marginBottom: 20,
             }}
           >
-            É melhor guardar dinheiro no próximo mês.
+            É melhor economizar no próximo mês.
           </Text>
 
           <Text
@@ -544,104 +564,67 @@ export default function MonthlyActions() {
       <View
         style={{
           backgroundColor: "#FFFFFF",
-          borderRadius: 16,
+          borderRadius: 24,
           borderWidth: 2,
-          borderColor: "#BFD7FF",
+          borderColor: "#DCE8F8",
           overflow: "hidden",
+          elevation: 5,
         }}
       >
         <View
           style={{
-            backgroundColor: "#DCE8F8",
-            padding: 16,
+            backgroundColor: "#3267E3",
+            padding: 20,
             alignItems: "center",
           }}
         >
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 28,
               fontWeight: "bold",
-              color: "#003B49",
+              color: "#FFF",
             }}
           >
-            🌱 Vamos Fazer o Dinheiro Crescer
+            🚀 Investimentos
+          </Text>
+
+          <Text
+            style={{
+              color: "#DCE8F8",
+              marginTop: 4,
+            }}
+          >
+            Faça seu dinheiro crescer!
           </Text>
         </View>
 
-        <View
-          style={{
-            padding: 16,
-          }}
-        >
+        <View style={{ padding: 20 }}>
           <View
             style={{
-              backgroundColor: "#FFFBE8",
-              borderWidth: 1,
-              borderColor: "#F2C94C",
-              borderRadius: 12,
-              padding: 16,
-              marginBottom: 16,
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                marginBottom: 8,
-              }}
-            >
-              Como Funciona?
-            </Text>
-
-            <Text
-              style={{
-                textAlign: "center",
-              }}
-            >
-              É como plantar uma sementinha.
-            </Text>
-
-            <Text
-              style={{
-                textAlign: "center",
-              }}
-            >
-              Quanto mais tempo ela fica guardada,
-            </Text>
-
-            <Text
-              style={{
-                textAlign: "center",
-              }}
-            >
-              mais dinheiro ela produz.
-            </Text>
-          </View>
-
-          <View
-            style={{
-              backgroundColor: "#EAF8EF",
-              borderWidth: 1,
-              borderColor: "#69D17D",
-              borderRadius: 12,
-              padding: 16,
+              backgroundColor: "#F0FDF4",
+              borderWidth: 2,
+              borderColor: "#22C55E",
+              borderRadius: 20,
+              padding: 20,
               alignItems: "center",
-              marginBottom: 16,
+              marginBottom: 24,
             }}
           >
             <Text
               style={{
                 fontSize: 18,
+                color: "#166534",
               }}
             >
-              Você Tem Disponível
+              Você tem disponível
             </Text>
 
             <Text
               style={{
-                fontSize: 34,
+                fontSize: 42,
                 fontWeight: "bold",
-                color: "#1EA84A",
+                color: "#16A34A",
+                marginVertical: 8,
               }}
             >
               R$ {availableForInvestment.toFixed(0)}
@@ -650,10 +633,11 @@ export default function MonthlyActions() {
             {extraEarnings > 0 && (
               <Text
                 style={{
-                  color: "#1EA84A",
+                  color: "#16A34A",
+                  fontWeight: "bold",
                 }}
               >
-                +R$ {extraEarnings} extras
+                +R$ {extraEarnings} extras 🎉
               </Text>
             )}
           </View>
@@ -661,12 +645,13 @@ export default function MonthlyActions() {
           <Text
             style={{
               textAlign: "center",
-              fontSize: 18,
+              fontSize: 22,
               fontWeight: "bold",
-              marginBottom: 16,
+              marginBottom: 20,
+              color: "#003B49",
             }}
           >
-            Quanto Quer Guardar?
+            Quanto quer guardar?
           </Text>
 
           <View
@@ -679,33 +664,73 @@ export default function MonthlyActions() {
             {investmentOptions.map((option) => {
               const selected = investmentAmount === option.amount.toString();
 
+              const percentage =
+                availableForInvestment > 0
+                  ? (option.amount / availableForInvestment) * 100
+                  : 0;
+
               return (
-                <View
+                <TouchableOpacity
                   key={option.amount}
+                  onPress={() => setInvestmentAmount(option.amount.toString())}
                   style={{
                     width: "48%",
-                    backgroundColor: selected ? "#DFF7E5" : "#F8F8F8",
+                    backgroundColor: selected ? "#EAF8EF" : "#FFFFFF",
+
                     borderWidth: 2,
-                    borderColor: selected ? "#1EA84A" : "#DDD",
-                    borderRadius: 12,
-                    padding: 12,
-                    marginBottom: 12,
+
+                    borderColor: selected ? "#16A34A" : "#E5E7EB",
+
+                    borderRadius: 20,
+
+                    padding: 16,
+
+                    marginBottom: 14,
+
+                    elevation: selected ? 6 : 2,
                   }}
                 >
                   <Text
-                    onPress={() =>
-                      setInvestmentAmount(option.amount.toString())
-                    }
                     style={{
+                      fontSize: 42,
                       textAlign: "center",
                     }}
                   >
                     {option.emoji}
-                    {"\n"}
+                  </Text>
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      marginTop: 8,
+                      color: "#003B49",
+                    }}
+                  >
                     {option.label}
-                    {"\n"}
+                  </Text>
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 30,
+                      fontWeight: "bold",
+                      color: "#16A34A",
+                      marginVertical: 10,
+                    }}
+                  >
                     R$ {option.amount}
-                    {"\n"}
+                  </Text>
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#6B7280",
+                      fontSize: 13,
+                      marginBottom: 12,
+                    }}
+                  >
                     {option.label === "Não Guardar"
                       ? "Deixar tudo na carteira"
                       : option.label === "Pouco"
@@ -713,19 +738,61 @@ export default function MonthlyActions() {
                         : option.label === "Médio"
                           ? "Guardar uma parte"
                           : "Guardar bastante"}
-                    {"\n"}
-                    Em 1 ano: R$ {Math.floor(option.amount * 1.15)}
                   </Text>
 
                   <View
                     style={{
-                      height: 8,
-                      backgroundColor: "#19A84A",
-                      borderRadius: 4,
-                      marginTop: 8,
+                      height: 10,
+                      backgroundColor: "#E5E7EB",
+                      borderRadius: 5,
+                      overflow: "hidden",
+                      marginBottom: 10,
                     }}
-                  />
-                </View>
+                  >
+                    <View
+                      style={{
+                        width: `${percentage}%`,
+                        height: "100%",
+                        backgroundColor: "#16A34A",
+                        borderRadius: 5,
+                      }}
+                    />
+                  </View>
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "#F59E0B",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    💰 Em 1 ano
+                  </Text>
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: "#F59E0B",
+                    }}
+                  >
+                    R$ {Math.floor(option.amount * 1.15)}
+                  </Text>
+
+                  {selected && (
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        marginTop: 10,
+                        color: "#16A34A",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ✓ Selecionado
+                    </Text>
+                  )}
+                </TouchableOpacity>
               );
             })}
           </View>
@@ -734,38 +801,50 @@ export default function MonthlyActions() {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              marginTop: 10,
+              marginTop: 12,
             }}
           >
-            <Text
+            <TouchableOpacity
               onPress={() => setCurrentStep("expenses")}
               style={{
-                backgroundColor: "#3267E3",
-                color: "#FFF",
-                padding: 12,
-                borderRadius: 10,
-                fontWeight: "bold",
                 width: "48%",
-                textAlign: "center",
+                backgroundColor: "#3267E3",
+                padding: 16,
+                borderRadius: 14,
               }}
             >
-              Voltar
-            </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                }}
+              >
+                ← Voltar
+              </Text>
+            </TouchableOpacity>
 
-            <Text
+            <TouchableOpacity
               onPress={handleInvestmentConfirm}
               style={{
-                backgroundColor: "#69D17D",
-                color: "#FFF",
-                padding: 12,
-                borderRadius: 10,
-                fontWeight: "bold",
                 width: "48%",
-                textAlign: "center",
+                backgroundColor: "#22C55E",
+                padding: 16,
+                borderRadius: 14,
               }}
             >
-              Confirmar Escolha
-            </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  fontSize: 16,
+                }}
+              >
+                Confirmar ✓
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

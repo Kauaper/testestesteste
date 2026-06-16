@@ -165,71 +165,93 @@ export default function ChapterSpecialEvent({
         },
       ],
     },
-    4: {
-      id: "talent_opportunity",
+    3: {
+      id: "friends_outing",
+      type: "temptation",
 
-      type: "opportunity",
+      title: "Passeio com os Amigos!",
 
-      title: "Descobrindo Seus Talentos!",
+      description: "Seus amigos querem ir a um parque de diversões.",
 
-      description: "A escola está organizando uma feira de talentos.",
-
-      emoji: "🎨",
+      emoji: "🎡",
 
       options: [
         {
-          id: "participate_art",
+          id: "spend_all",
+          text: "Gastar R$25 para acompanhar todos",
+          consequence: "Você se divertiu, mas ficou com pouco dinheiro.",
+          moneyChange: -25,
+          petHappinessChange: 10,
+          lesson: "Nem sempre precisamos gastar para pertencer.",
+        },
 
-          text: "Vender desenhos (R$5)",
+        {
+          id: "spend_little",
+          text: "Levar apenas R$10",
+          consequence: "Você se divertiu e controlou seus gastos.",
+          moneyChange: -10,
+          petHappinessChange: 15,
+          lesson: "Planejar gastos ajuda a aproveitar melhor.",
 
-          consequence: "Você ganhou R$25 com seus desenhos.",
+          achievement: "smart_spender",
+        },
 
-          moneyChange: -5,
-
-          extraEarnings: 25,
-
+        {
+          id: "free_activity",
+          text: "Sugerir uma atividade gratuita",
+          consequence: "Todos gostaram da ideia.",
+          moneyChange: 0,
           petHappinessChange: 20,
+          lesson: "Boas escolhas não dependem de dinheiro.",
+        },
+      ],
+    },
 
-          lesson: "Investir nos seus talentos vale a pena.",
+    4: {
+      id: "help_neighbor",
+      type: "help",
+
+      title: "Hora de Ajudar!",
+
+      description: "Sua vizinha precisa de ajuda para organizar a feira.",
+
+      emoji: "🤝",
+
+      options: [
+        {
+          id: "help_all_day",
+          text: "Ajudar o dia inteiro",
+          consequence: "Ela agradeceu e te deu R$20.",
+          moneyChange: 0,
+          extraEarnings: 20,
+          petHappinessChange: 20,
+          lesson: "Ajudar os outros gera valor.",
 
           achievement: "helper",
         },
 
         {
-          id: "participate_music",
-
-          text: "Tocar música",
-
-          consequence: "Você ganhou R$12 de gorjetas.",
-
+          id: "help_some",
+          text: "Ajudar um pouco",
+          consequence: "Você ajudou e aprendeu bastante.",
           moneyChange: 0,
-
-          extraEarnings: 12,
-
-          petHappinessChange: 15,
-
-          lesson: "Talentos podem gerar renda.",
+          petHappinessChange: 10,
+          lesson: "Toda ajuda faz diferença.",
         },
 
         {
-          id: "not_participate",
-
-          text: "Não participar",
-
-          consequence: "Você perdeu uma oportunidade.",
-
+          id: "dont_help",
+          text: "Não ajudar",
+          consequence: "Você perdeu a chance de fazer a diferença.",
           moneyChange: 0,
-
-          petHappinessChange: -5,
-
-          lesson: "A timidez pode nos impedir de crescer.",
+          petHappinessChange: -10,
+          lesson: "Pequenas ações podem transformar vidas.",
         },
       ],
     },
 
     5: {
       id: "sweet_temptation",
-
       type: "temptation",
 
       title: "Festival de Doces!",
@@ -241,46 +263,28 @@ export default function ChapterSpecialEvent({
       options: [
         {
           id: "go_crazy",
-
-          text: "Comer tudo (R$30)",
-
-          consequence: "Você exagerou nos doces.",
-
+          text: "Comprar vários doces (R$30)",
+          consequence: "Você exagerou nos gastos.",
           moneyChange: -30,
-
-          petHappinessChange: 5,
-
           lesson: "Exageros têm consequências.",
         },
 
         {
-          id: "enjoy_moderately",
-
-          text: "Comer com moderação (R$12)",
-
-          consequence: "Você se divertiu sem exagerar.",
-
+          id: "moderation",
+          text: "Comprar alguns doces (R$12)",
+          consequence: "Você aproveitou com equilíbrio.",
           moneyChange: -12,
-
-          petHappinessChange: 15,
-
-          lesson: "Moderação é sabedoria.",
+          lesson: "Moderação é importante.",
 
           achievement: "smart_spender",
         },
 
         {
-          id: "resist_festival",
-
+          id: "resist",
           text: "Resistir",
-
-          consequence: "Você mostrou força de vontade.",
-
+          consequence: "Você economizou e se orgulhou da decisão.",
           moneyChange: 0,
-
-          petHappinessChange: 25,
-
-          lesson: "Disciplina gera crescimento.",
+          lesson: "Saber dizer não também é uma vitória.",
 
           achievement: "resist_temptation",
         },
@@ -288,418 +292,311 @@ export default function ChapterSpecialEvent({
     },
 
     6: {
-      id: "school_uniform",
-
+      id: "school_supplies",
       type: "responsibility",
 
-      title: "Uniforme Escolar!",
+      title: "Material Escolar Novo!",
 
-      description: "A escola exige um uniforme novo.",
+      description: "Você precisa comprar materiais para as aulas.",
 
-      emoji: "👔",
+      emoji: "📚",
 
       options: [
         {
-          id: "buy_new",
-
-          text: "Comprar novo (R$45)",
-
-          consequence: "Você comprou o uniforme oficial.",
-
-          moneyChange: -45,
-
-          petHappinessChange: 5,
-
-          lesson: "Alguns gastos são obrigatórios.",
-
-          achievement: "emergency_prepared",
+          id: "buy_expensive",
+          text: "Comprar tudo novo (R$40)",
+          consequence: "Você gastou bastante.",
+          moneyChange: -40,
+          lesson: "Precisamos priorizar nossos gastos.",
         },
 
         {
-          id: "ask_help",
-
-          text: "Pedir ajuda aos pais",
-
-          consequence: "Seus pais ajudaram você.",
-
-          moneyChange: 0,
-
-          extraEarnings: 45,
-
-          lesson: "Pedir ajuda é normal.",
-        },
-
-        {
-          id: "try_used",
-
-          text: "Comprar usado (R$25)",
-
-          consequence: "Você economizou bastante.",
-
+          id: "search_prices",
+          text: "Pesquisar preços (R$25)",
+          consequence: "Você economizou dinheiro.",
           moneyChange: -25,
-
-          petHappinessChange: 10,
-
-          lesson: "Pesquisar antes economiza dinheiro.",
+          lesson: "Pesquisar antes de comprar vale a pena.",
 
           achievement: "smart_spender",
         },
+
+        {
+          id: "buy_used",
+          text: "Comprar usado (R$15)",
+          consequence: "Você economizou bastante.",
+          moneyChange: -15,
+          lesson: "Nem sempre o novo é a melhor opção.",
+        },
       ],
     },
+
     7: {
-      id: "pet_emergency",
-
-      type: "responsibility",
-
-      title: "Emergência do Pet!",
-
-      description: "Seu bichinho ficou doente e precisa de cuidados.",
-
-      emoji: "🏥",
-
-      options: [
-        {
-          id: "vet_now",
-
-          text: "Levar ao veterinário (R$35)",
-
-          consequence: "Seu pet se recuperou rapidamente.",
-
-          moneyChange: -35,
-
-          petHappinessChange: 30,
-
-          lesson: "Precisamos estar preparados para emergências.",
-
-          achievement: "pet_lover",
-        },
-
-        {
-          id: "basic_care",
-
-          text: "Cuidar em casa (R$10)",
-
-          consequence: "Seu pet melhorou devagar.",
-
-          moneyChange: -10,
-
-          petHappinessChange: 10,
-
-          lesson: "Nem sempre a solução mais barata é a melhor.",
-        },
-
-        {
-          id: "ignore",
-
-          text: "Esperar passar",
-
-          consequence: "Seu pet ficou triste e piorou.",
-
-          moneyChange: 0,
-
-          petHappinessChange: -25,
-
-          lesson: "Responsabilidade exige ação.",
-        },
-      ],
-    },
-
-    8: {
-      id: "community_event",
-
-      type: "help",
-
-      title: "Mutirão da Comunidade!",
-
-      description: "O bairro está organizando uma ação voluntária.",
-
-      emoji: "🤝",
-
-      options: [
-        {
-          id: "help_all_day",
-
-          text: "Participar o dia inteiro",
-
-          consequence: "Você recebeu reconhecimento da comunidade.",
-
-          moneyChange: 0,
-
-          extraEarnings: 20,
-
-          petHappinessChange: 20,
-
-          lesson: "Ajudar gera valor para todos.",
-
-          achievement: "generous_heart",
-        },
-
-        {
-          id: "help_some_hours",
-
-          text: "Participar algumas horas",
-
-          consequence: "Você colaborou e aprendeu bastante.",
-
-          moneyChange: 0,
-
-          extraEarnings: 10,
-
-          petHappinessChange: 10,
-
-          lesson: "Toda ajuda faz diferença.",
-        },
-
-        {
-          id: "stay_home",
-
-          text: "Ficar em casa",
-
-          consequence: "Você perdeu uma experiência importante.",
-
-          moneyChange: 0,
-
-          petHappinessChange: -5,
-
-          lesson: "Participar da comunidade é valioso.",
-        },
-      ],
-    },
-
-    9: {
-      id: "investment_opportunity",
-
+      id: "talent_fair",
       type: "opportunity",
 
-      title: "Oportunidade de Crescimento!",
+      title: "Feira de Talentos!",
 
-      description: "Você encontrou uma forma de fazer seu dinheiro render.",
+      description: "Você pode usar seus talentos para ganhar dinheiro.",
 
-      emoji: "📈",
+      emoji: "🎨",
 
       options: [
         {
-          id: "invest_big",
-
-          text: "Investir bastante (R$30)",
-
-          consequence: "Seu dinheiro começou a crescer.",
-
-          moneyChange: -30,
-
-          extraEarnings: 45,
-
-          petHappinessChange: 10,
-
-          lesson: "Investimentos podem gerar retorno.",
+          id: "sell_drawings",
+          text: "Vender desenhos",
+          consequence: "Você ganhou R$25.",
+          moneyChange: 0,
+          extraEarnings: 25,
+          lesson: "Talentos podem gerar renda.",
 
           achievement: "growth_expert",
         },
 
         {
-          id: "invest_little",
-
-          text: "Investir pouco (R$10)",
-
-          consequence: "Você teve um retorno moderado.",
-
-          moneyChange: -10,
-
+          id: "play_music",
+          text: "Tocar música",
+          consequence: "Você recebeu R$15 de gorjetas.",
+          moneyChange: 0,
           extraEarnings: 15,
-
-          petHappinessChange: 5,
-
-          lesson: "Começar pequeno também funciona.",
+          lesson: "Suas habilidades têm valor.",
         },
 
         {
-          id: "dont_invest",
-
-          text: "Não investir",
-
-          consequence: "Você perdeu a oportunidade.",
-
+          id: "dont_participate",
+          text: "Não participar",
+          consequence: "Você perdeu uma oportunidade.",
           moneyChange: 0,
-
-          lesson: "Oportunidades precisam ser aproveitadas.",
+          lesson: "Às vezes precisamos acreditar em nós mesmos.",
         },
       ],
     },
-    10: {
-      id: "friend_needs_help",
 
+    8: {
+      id: "fashion_vs_need",
+      type: "temptation",
+
+      title: "O Tênis da Moda!",
+
+      description: "Todos estão usando um tênis muito caro.",
+
+      emoji: "👟",
+
+      options: [
+        {
+          id: "buy_fashion",
+          text: "Comprar por R$50",
+          consequence: "Você ficou sem muito dinheiro.",
+          moneyChange: -50,
+          lesson: "Desejo e necessidade são coisas diferentes.",
+        },
+
+        {
+          id: "look_discount",
+          text: "Procurar promoção",
+          consequence: "Você economizou bastante.",
+          moneyChange: -25,
+          lesson: "Pesquisar pode fazer toda diferença.",
+
+          achievement: "smart_spender",
+        },
+
+        {
+          id: "keep_old",
+          text: "Continuar com o atual",
+          consequence: "Você economizou dinheiro.",
+          moneyChange: 0,
+          lesson: "Não precisamos seguir todas as modas.",
+        },
+      ],
+    },
+
+    9: {
+      id: "class_trip",
+      type: "opportunity",
+
+      title: "Viagem da Turma!",
+
+      description: "Sua turma vai fazer uma excursão.",
+
+      emoji: "🎢",
+
+      options: [
+        {
+          id: "pay_trip",
+          text: "Pagar R$30",
+          consequence: "Você se divertiu muito.",
+          moneyChange: -30,
+          petHappinessChange: 20,
+          lesson: "Planejar permite aproveitar oportunidades.",
+        },
+
+        {
+          id: "save_before",
+          text: "Economizar e ir depois",
+          consequence: "Você se organizou e conseguiu participar.",
+          moneyChange: -15,
+          petHappinessChange: 15,
+          lesson: "Metas exigem planejamento.",
+
+          achievement: "future_planner",
+        },
+
+        {
+          id: "dont_go",
+          text: "Não participar",
+          consequence: "Você preferiu guardar dinheiro.",
+          moneyChange: 0,
+          lesson: "Toda escolha possui consequências.",
+        },
+      ],
+    },
+
+    10: {
+      id: "lost_wallet",
       type: "help",
 
-      title: "Um Amigo Precisa de Você",
+      title: "Carteira Encontrada!",
 
-      description:
-        "Seu amigo está arrecadando dinheiro para uma causa importante.",
+      description: "Você encontrou uma carteira cheia de dinheiro.",
+
+      emoji: "💰",
+
+      options: [
+        {
+          id: "return_wallet",
+          text: "Devolver a carteira",
+          consequence: "O dono te agradeceu e deu R$20.",
+          moneyChange: 0,
+          extraEarnings: 20,
+          lesson: "A honestidade sempre vale a pena.",
+
+          achievement: "honest_hero",
+        },
+
+        {
+          id: "ignore",
+          text: "Ignorar",
+          consequence: "Outra pessoa devolveu a carteira.",
+          moneyChange: 0,
+          lesson: "Podemos perder oportunidades de fazer o bem.",
+        },
+
+        {
+          id: "keep_money",
+          text: "Ficar com o dinheiro",
+          consequence: "Você se sentiu mal pela escolha.",
+          moneyChange: 50,
+          petHappinessChange: -30,
+          lesson: "Ganhos desonestos não trazem felicidade.",
+        },
+      ],
+    },
+
+    11: {
+      id: "charity_campaign",
+      type: "help",
+
+      title: "Campanha Solidária!",
+
+      description: "Sua escola está arrecadando recursos para ajudar famílias.",
 
       emoji: "❤️",
 
       options: [
         {
-          id: "donate_generously",
-
+          id: "donate_money",
           text: "Doar R$20",
-
-          consequence: "Seu amigo ficou muito feliz.",
-
+          consequence: "Você ajudou muitas pessoas.",
           moneyChange: -20,
-
-          petHappinessChange: 15,
-
+          petHappinessChange: 20,
           lesson: "Generosidade transforma vidas.",
 
           achievement: "generous_heart",
         },
 
         {
-          id: "donate_little",
-
-          text: "Doar R$10",
-
-          consequence: "Você ajudou dentro das suas possibilidades.",
-
-          moneyChange: -10,
-
-          petHappinessChange: 10,
-
-          lesson: "Toda ajuda importa.",
-        },
-
-        {
-          id: "dont_donate",
-
-          text: "Não ajudar",
-
-          consequence: "Você guardou seu dinheiro.",
-
+          id: "donate_time",
+          text: "Ajudar como voluntário",
+          consequence: "Você ajudou sem gastar dinheiro.",
           moneyChange: 0,
-
-          petHappinessChange: -5,
-
-          lesson: "Às vezes precisamos pensar nos outros também.",
-        },
-      ],
-    },
-
-    11: {
-      id: "holiday_shopping",
-
-      type: "temptation",
-
-      title: "Promoção Imperdível!",
-
-      description: "Uma grande loja lançou descontos incríveis.",
-
-      emoji: "🛍️",
-
-      options: [
-        {
-          id: "buy_everything",
-
-          text: "Comprar muitas coisas (R$40)",
-
-          consequence: "Você gastou bastante dinheiro.",
-
-          moneyChange: -40,
-
-          petHappinessChange: 5,
-
-          lesson: "Nem toda promoção vale a pena.",
-        },
-
-        {
-          id: "buy_needed",
-
-          text: "Comprar apenas o necessário (R$15)",
-
-          consequence: "Você fez compras conscientes.",
-
-          moneyChange: -15,
-
-          petHappinessChange: 10,
-
-          lesson: "Planejamento evita desperdícios.",
-
-          achievement: "smart_spender",
-        },
-
-        {
-          id: "skip_sale",
-
-          text: "Não comprar",
-
-          consequence: "Você economizou dinheiro.",
-
-          moneyChange: 0,
-
           petHappinessChange: 15,
+          lesson: "Podemos ajudar de várias formas.",
+        },
 
-          lesson: "Resistir também é uma escolha inteligente.",
-
-          achievement: "resist_temptation",
+        {
+          id: "dont_participate",
+          text: "Não participar",
+          consequence: "Você perdeu uma oportunidade de ajudar.",
+          moneyChange: 0,
+          petHappinessChange: -5,
+          lesson: "Pequenas ações fazem diferença.",
         },
       ],
     },
-
     12: {
-      id: "final_challenge",
+      id: "dream_of_the_future",
 
       type: "opportunity",
 
-      title: "Grande Desafio Final!",
+      title: "🌟 O Grande Sonho!",
 
-      description: "Chegou a última oportunidade da sua jornada.",
+      description:
+        "Depois de um ano inteiro aprendendo, você recebe a chance de realizar um grande sonho. O que você fará?",
 
-      emoji: "🏆",
+      emoji: "🌟",
 
       options: [
         {
-          id: "take_risk",
+          id: "invest_in_dream",
 
-          text: "Aceitar o desafio",
+          text: "Investir R$40 no seu sonho",
 
-          consequence: "Você mostrou coragem e ganhou uma recompensa.",
+          consequence:
+            "Você se dedicou, trabalhou duro e seu sonho começou a dar frutos!",
 
-          moneyChange: 0,
+          moneyChange: -40,
 
-          extraEarnings: 50,
+          extraEarnings: 80,
 
-          petHappinessChange: 20,
+          petHappinessChange: 30,
 
-          lesson: "Grandes conquistas exigem coragem.",
+          lesson:
+            "Planejamento, coragem e persistência transformam sonhos em realidade.",
 
           achievement: "future_planner",
         },
 
         {
-          id: "play_safe",
+          id: "save_and_plan",
 
-          text: "Seguir com segurança",
+          text: "Guardar dinheiro e planejar melhor",
 
-          consequence: "Você manteve estabilidade financeira.",
+          consequence:
+            "Você preferiu crescer com segurança e construiu uma base sólida.",
 
           moneyChange: 0,
 
-          extraEarnings: 20,
+          extraEarnings: 30,
 
-          petHappinessChange: 10,
+          petHappinessChange: 20,
 
-          lesson: "Segurança também é importante.",
+          lesson:
+            "Grandes conquistas também podem ser alcançadas com paciência.",
         },
 
         {
-          id: "do_nothing",
+          id: "give_up",
 
-          text: "Não participar",
+          text: "Desistir do sonho",
 
-          consequence: "Você encerrou o ano sem mudanças.",
+          consequence:
+            "Você decidiu não arriscar e ficou imaginando o que poderia ter acontecido.",
 
           moneyChange: 0,
 
-          lesson: "Oportunidades não voltam para sempre.",
+          petHappinessChange: -10,
+
+          lesson: "Às vezes, o maior risco é nunca tentar.",
         },
       ],
     },
